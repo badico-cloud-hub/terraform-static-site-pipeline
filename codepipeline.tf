@@ -24,9 +24,11 @@ resource "aws_codepipeline" "prod_pipeline" {
       output_artifacts = ["code"]
 
       configuration {
-        Owner  = var.git_repository_owner
-        Repo   = var.git_repository_name
-        Branch = var.git_repository_branch
+        OAuthToken            = var.github_oauth_token
+        Owner                 = var.git_repository_owner
+        Repo                  = var.git_repository_name
+        Branch                = var.git_repository_branch
+        PollForSourceChanges  = var.poll_source_changes
       }
     }
   }
