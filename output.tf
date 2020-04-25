@@ -1,7 +1,7 @@
-output "website-s3-endpoint" {
-  value = "${module.production.s3-bucket}"
+output "s3-bucket" {
+  value = "${aws_s3_bucket.bucket_site.website_endpoint}"
 }
 
-output "website-cdn-endpoint" {
-  value = "${module.production.s3-cdn}"
+output "s3-cdn" {
+  value = "${aws_cloudfront_distribution.site_s3_distribution.domain_name }"
 }
