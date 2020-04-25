@@ -5,7 +5,6 @@ resource "aws_cloudfront_distribution" "site_s3_distribution" {
     depends_on = ["aws_s3_bucket.bucket_site"]
     enabled             = true
     is_ipv6_enabled     = true
-    comment             = ""
     default_root_object = "index.html"
     
     comment             = "${var.app_name}-${var.git_repository_branch}-cdn"    
@@ -22,7 +21,7 @@ resource "aws_cloudfront_distribution" "site_s3_distribution" {
         }
     }
 
-  default_cache_behavior {
+    default_cache_behavior {
 
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
@@ -30,11 +29,11 @@ resource "aws_cloudfront_distribution" "site_s3_distribution" {
     target_origin_id = "${aws_s3_bucket.bucket_site.id}"
 
     forwarded_values {
-      query_string = true
+        query_string = true
 
-      cookies {
-        forward = "all"
-      }
+        cookies {
+            forward = "all"
+        }
     }
 
     viewer_protocol_policy = "allow-all"
@@ -42,7 +41,7 @@ resource "aws_cloudfront_distribution" "site_s3_distribution" {
     default_ttl            = 0
     max_ttl                = 0
 
-  }    
+    }    
 
     ordered_cache_behavior {
 
@@ -50,7 +49,7 @@ resource "aws_cloudfront_distribution" "site_s3_distribution" {
         allowed_methods  = ["GET", "HEAD", "OPTIONS"]
         cached_methods   = ["GET", "HEAD"]
 
-        target_origin_id = "${aws_s3_bucket.bucket_site.id}"
+        target_origin_id = aws_s3_bucket.bucket_site.id
 
         forwarded_values {
 
@@ -77,7 +76,7 @@ resource "aws_cloudfront_distribution" "site_s3_distribution" {
         allowed_methods  = ["GET", "HEAD", "OPTIONS"]
         cached_methods   = ["GET", "HEAD"]
 
-        target_origin_id = "${aws_s3_bucket.bucket_site.id}"
+        target_origin_id = aws_s3_bucket.bucket_site.id
         
         forwarded_values {
             query_string = true
@@ -100,7 +99,7 @@ resource "aws_cloudfront_distribution" "site_s3_distribution" {
         allowed_methods  = ["GET", "HEAD", "OPTIONS"]
         cached_methods   = ["GET", "HEAD"]
 
-        target_origin_id = "${aws_s3_bucket.bucket_site.id}"
+        target_origin_id = aws_s3_bucket.bucket_site.id
 
         forwarded_values {
             query_string = true

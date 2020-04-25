@@ -2,7 +2,10 @@ resource "aws_codepipeline" "prod_pipeline" {
   name     = "${var.app_name}-${var.git_repository_branch}-pipeline"
   role_arn = "${aws_iam_role.codepipeline_role.arn}"
 
-  depends_on = ["aws_s3_bucket.bucket_site", "aws_s3_bucket.source"]
+  depends_on = [
+    "aws_s3_bucket.bucket_site",
+    "aws_s3_bucket.source"
+  ]
   
   artifact_store {
     location = "${aws_s3_bucket.source.bucket}"
@@ -18,7 +21,7 @@ resource "aws_codepipeline" "prod_pipeline" {
       owner            = "ThirdParty"
       provider         = "GitHub"
       version          = "1"
-      output_artifacts = ["source"]
+      output_artifacts = ["code"]
 
       configuration {
         Owner  = "${var.git_repository_owner}"
@@ -29,7 +32,7 @@ resource "aws_codepipeline" "prod_pipeline" {
   }
 
   stage {
-    name = "Deploy"
+    name = "Build"
 
     action {
       name             = "Build"
@@ -37,10 +40,28 @@ resource "aws_codepipeline" "prod_pipeline" {
       owner            = "AWS"
       provider         = "CodeBuild"
       version          = "1"
-      input_artifacts  = ["source"]
-
+      input_artifacts  = ["code"]
+      output_artifacts = ["bundle"]
       configuration {
         ProjectName = "${var.app_name}-${var.git_repository_branch}-codebuild"
+      }
+    }
+  }
+
+  stage {
+    name = "Deploy"
+
+    action {
+      name            = "Deploy"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "S3"
+      input_artifacts = ["bundle"]
+      version         = "1"
+
+      configuration {
+        BucketName = aws_s3_bucket.bucket_site.name
+        Extract = "true"
       }
     }
   }

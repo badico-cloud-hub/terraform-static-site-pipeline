@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "bucket_site" {
 
-    bucket = "${var.app_name}-${var.account_id}-${var.git_repository_branch}"
+    bucket = "${var.app_name}-${var.git_repository_branch}"
     acl    = "public-read"
     force_destroy = true
     
@@ -19,7 +19,7 @@ resource "aws_s3_bucket" "bucket_site" {
 }
 
 resource "aws_s3_bucket_policy" "bucket_site_policy" {
-    bucket = "${aws_s3_bucket.bucket_site.id}"
+    bucket = aws_s3_bucket.bucket_site.id
 
     policy = <<POLICY
 {
