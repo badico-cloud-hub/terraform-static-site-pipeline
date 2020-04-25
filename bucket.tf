@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "bucket_site" {
 
-    bucket = "${var.app_name}-${var.git_repository_branch}"
+    bucket = "${var.app_name}-${var.git_repository_branch_sanitized}"
     acl    = "public-read"
     force_destroy = true
     

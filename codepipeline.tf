@@ -1,5 +1,5 @@
 resource "aws_codepipeline" "prod_pipeline" {
-  name     = "${var.app_name}-${var.git_repository_branch}-pipeline"
+  name     = "${var.app_name}-${var.git_repository_branch_sanitized}-pipeline"
   role_arn = "${aws_iam_role.codepipeline_role.arn}"
 
   depends_on = [
@@ -46,7 +46,7 @@ resource "aws_codepipeline" "prod_pipeline" {
       output_artifacts = ["bundle"]
     
       configuration    = {
-        ProjectName = "${var.app_name}-${var.git_repository_branch}-codebuild"
+        ProjectName = "${var.app_name}-${var.git_repository_branch_sanitized}-codebuild"
       }
     }
   }

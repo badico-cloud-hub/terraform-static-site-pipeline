@@ -40,3 +40,8 @@ variable "poll_source_changes" {
   default     = false
   description = "Periodically check the location of your source content and run the pipeline if changes are detected"
 }
+
+variable "git_repository_branch_sanitized" {
+  type        = string
+  description = "Branch name without / and other symbols"
+}

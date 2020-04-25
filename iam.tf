@@ -1,5 +1,6 @@
+
 resource "aws_iam_role" "codepipeline_role" {
-  name               = "codepipeline-${var.app_name}-${var.git_repository_branch}-role"
+  name               = "codepipeline-${var.app_name}-${var.git_repository_branch_sanitized}-role"
   assume_role_policy = file("${path.module}/templates/policies/codepipeline_role.json")
 }
 
@@ -18,7 +19,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 }
 
 resource "aws_iam_role" "codebuild_role" {
-  name               = "codebuild-${var.app_name}-${var.git_repository_branch}-role"
+  name               = "codebuild-${var.app_name}-${var.git_repository_branch_sanitized}-role"
   assume_role_policy = file("${path.module}/templates/policies/codebuild_role.json")
 }
 
@@ -31,7 +32,7 @@ data "template_file" "codebuild_policy" {
 }
 
 resource "aws_iam_role_policy" "codebuild_policy" {
-  name   = "codebuild-${var.app_name}-${var.git_repository_branch}-policy"
+  name   = "codebuild-${var.app_name}-${var.git_repository_branch_sanitized}-policy"
   role   = aws_iam_role.codebuild_role.id
   policy = data.template_file.codebuild_policy.rendered
 }
