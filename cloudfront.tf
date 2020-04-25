@@ -10,8 +10,8 @@ resource "aws_cloudfront_distribution" "site_s3_distribution" {
     comment             = "${var.app_name}-${var.git_repository_branch}-cdn"    
 
     origin {
-        domain_name = "${aws_s3_bucket.bucket_site.website_endpoint}"
-        origin_id   = "${aws_s3_bucket.bucket_site.id}"
+        domain_name = aws_s3_bucket.bucket_site.website_endpoint
+        origin_id   = aws_s3_bucket.bucket_site.id
 
         custom_origin_config {
             http_port = 80
