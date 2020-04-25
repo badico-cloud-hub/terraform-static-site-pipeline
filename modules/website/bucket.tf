@@ -24,10 +24,10 @@ resource "aws_s3_bucket_policy" "bucket_site_policy" {
     policy = <<POLICY
 {
         "Version": "2008-10-17",
-        "Id": "Allow-Public-Access-${var.app_name}-${var.account_id}",
+        "Id": "Allow-Public-Access-${var.app_name}",
         "Statement": [
             {
-                "Sid": "Allow-Public-Access-${var.app_name}-${var.account_id}",
+                "Sid": "Allow-Public-Access-${var.app_name}",
                 "Effect": "Allow",
                 "Principal": "*",
                 "Action": "s3:GetObject",
