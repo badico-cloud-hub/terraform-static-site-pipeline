@@ -23,7 +23,7 @@ resource "aws_codepipeline" "prod_pipeline" {
       version          = "1"
       output_artifacts = ["code"]
 
-      configuration {
+      configuration    = {
         OAuthToken            = var.github_oauth_token
         Owner                 = var.git_repository_owner
         Repo                  = var.git_repository_name
@@ -44,7 +44,8 @@ resource "aws_codepipeline" "prod_pipeline" {
       version          = "1"
       input_artifacts  = ["code"]
       output_artifacts = ["bundle"]
-      configuration {
+    
+      configuration    = {
         ProjectName = "${var.app_name}-${var.git_repository_branch}-codebuild"
       }
     }
@@ -61,8 +62,8 @@ resource "aws_codepipeline" "prod_pipeline" {
       input_artifacts = ["bundle"]
       version         = "1"
 
-      configuration {
-        BucketName = aws_s3_bucket.bucket_site.name
+      configuration   = {
+        BucketName = "${var.app_name}-${var.git_repository_branch}"
         Extract = "true"
       }
     }
