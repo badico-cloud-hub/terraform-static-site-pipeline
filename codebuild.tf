@@ -28,12 +28,18 @@ resource "aws_codebuild_project" "prod_app_build" {
       name  = "DISTRIBUITION_ID"
       value = aws_cloudfront_distribution.site_s3_distribution.id
     }
+    environment_variable {
+      name  = var.api_url_env_name
+      value = var.api_url_env_value
+    }
+    environment_variable {
+      name  = var.websocket_url_env_name
+      value = var.websocket_url_env_value
+    }
   }
 
   source {
-    # TODO: put the same as ecs pipeline
     type      = "CODEPIPELINE"
-    # buildspec = "${data.template_file.prod_buildspec.rendered}"
   }
 
 }

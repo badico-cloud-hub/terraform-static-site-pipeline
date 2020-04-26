@@ -63,7 +63,7 @@ resource "aws_codepipeline" "prod_pipeline" {
       version         = "1"
 
       configuration   = {
-        BucketName = "${var.app_name}-${var.git_repository_branch}"
+        BucketName = "${var.app_name}-${var.git_repository_branch_sanitized}"
         Extract = "true"
       }
     }

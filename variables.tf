@@ -45,3 +45,23 @@ variable "git_repository_branch_sanitized" {
   type        = string
   description = "Branch name without / and other symbols"
 }
+
+variable "api_url_env_name" {
+  type        = string
+  description = "API url environment variable name"
+}
+
+variable "api_url_env_value" {
+  type        = string
+  description = "API url environment variable value"
+}
+
+variable "websocket_url_env_name" {
+  type        = string
+  description = "WebSocket url environment variable name"
+}
+
+variable "websocket_url_env_value" {
+  type        = string
+  description = "WebSocket url environment variable value"
+}
